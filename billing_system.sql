@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2021 at 06:49 PM
+-- Generation Time: Jun 22, 2021 at 03:09 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -49,12 +49,21 @@ INSERT INTO `adminlogin_tb` (`a_id`, `a_name`, `a_email`, `a_pswd`, `a_phn`) VAL
 --
 
 CREATE TABLE `metabill_tb` (
-  `b_id` int(10) UNSIGNED NOT NULL,
-  `b_date` date NOT NULL,
-  `b_time` time NOT NULL,
+  `b_id` int(5) UNSIGNED ZEROFILL NOT NULL,
+  `b_date` text COLLATE utf8_bin NOT NULL,
+  `b_time` text COLLATE utf8_bin NOT NULL,
   `b_of_person` varchar(60) COLLATE utf8_bin NOT NULL,
-  `b_amount` int(10) UNSIGNED NOT NULL
+  `b_amount` int(10) UNSIGNED NOT NULL,
+  `b_items` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`b_items`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `metabill_tb`
+--
+
+INSERT INTO `metabill_tb` (`b_id`, `b_date`, `b_time`, `b_of_person`, `b_amount`, `b_items`) VALUES
+(00005, '2021-06-22', '6:34:45 PM', 'savan', 998, '[{\"inm\":\"Monte Carlo Shirt\",\"iqu\":\"2\",\"ipr\":\"499\",\"iamt\":\"998\"}]'),
+(00006, '2021-06-22', '6:36:14 PM', 'rajan', 97248, '[{\"inm\":\"Iphone 11\",\"iqu\":\"1\",\"ipr\":\"95000\",\"iamt\":\"95000\"},{\"inm\":\"N-95 Masks\",\"iqu\":\"5\",\"ipr\":\"50\",\"iamt\":\"250\"},{\"inm\":\"Monte Carlo Shirt\",\"iqu\":\"1\",\"ipr\":\"499\",\"iamt\":\"499\"},{\"inm\":\"Nike Shoes\",\"iqu\":\"1\",\"ipr\":\"1499\",\"iamt\":\"1499\"}]');
 
 -- --------------------------------------------------------
 
@@ -83,7 +92,6 @@ INSERT INTO `products_tb` (`p_id`, `p_name`, `p_price`, `p_avail`) VALUES
 (0007, 'Monte Carlo Shirt', '499', '15'),
 (0008, 'Cap', '60', '40'),
 (0009, 'Nike Shoes', '1499', '90'),
-(0010, 'LED', '35', '40'),
 (0011, 'Cello Pen', '10', '100'),
 (0012, 'Ubon Handsfree', '50', '50'),
 (0019, 'Glasses Frame', '300', '20');
@@ -147,13 +155,13 @@ ALTER TABLE `usersignup_tb`
 -- AUTO_INCREMENT for table `metabill_tb`
 --
 ALTER TABLE `metabill_tb`
-  MODIFY `b_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `b_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products_tb`
 --
 ALTER TABLE `products_tb`
-  MODIFY `p_id` int(4) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `p_id` int(4) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `usersignup_tb`
